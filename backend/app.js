@@ -51,8 +51,6 @@ app.use(cors({
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json({ limit: '50mb' }));
 
-const MongoStore = require('connect-mongo');
-
 app.use(session({ 
     secret: process.env.SESSION_SECRET || 'defaultSecret', 
     resave: false, 
