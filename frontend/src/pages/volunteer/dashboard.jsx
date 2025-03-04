@@ -17,7 +17,7 @@ export function VolunteerDashboard() {
   useEffect(() => {
     const fetchApprovedDonations = async () => {
         try {
-            const response = await fetch("http://localhost:5000/api/volunteers/approved-donations", {
+            const response = await fetch("https://aaharsetufinal.onrender.com/api/volunteers/approved-donations", {
                 credentials: "include",
             });
 
@@ -42,7 +42,7 @@ export function VolunteerDashboard() {
   useEffect(() => {
     const fetchActiveDeliveries = async () => {
         try {
-            const response = await fetch("http://localhost:5000/api/volunteers/active-deliveries", {
+            const response = await fetch("https://aaharsetufinal.onrender.com/api/volunteers/active-deliveries", {
                 credentials: "include",
             });
 
@@ -63,7 +63,7 @@ export function VolunteerDashboard() {
   // ✅ Handle accepting a delivery
   const handleAcceptDelivery = async (donationId) => {
     try {
-        const response = await fetch(`http://localhost:5000/api/volunteers/claim/${donationId}`, {
+        const response = await fetch(`https://aaharsetufinal.onrender.com/api/volunteers/claim/${donationId}`, {
             method: "POST",
             credentials: "include",
             headers: { "Content-Type": "application/json" },
@@ -96,7 +96,7 @@ export function VolunteerDashboard() {
   // ✅ Handle marking a delivery as completed
   const handleCompleteDelivery = async (donationId) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/volunteers/complete/${donationId}`, {
+      const response = await fetch(`https://aaharsetufinal.onrender.com/api/volunteers/complete/${donationId}`, {
         method: "POST",
         credentials: "include",
       });

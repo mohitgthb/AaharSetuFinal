@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
   // ✅ Fetch user session on app load
   const fetchUser = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/auth/me", { credentials: "include" });
+      const res = await fetch("https://aaharsetufinal.onrender.com/api/auth/me", { credentials: "include" });
       const data = await res.json();
 
       if (res.ok) {

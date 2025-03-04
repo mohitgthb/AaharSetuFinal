@@ -66,7 +66,7 @@ export function LogisticRegister() {
         console.log('Form Data:', formData);
 
         try {
-            const response = await fetch('http://localhost:5000/api/volunteers/register', {
+            const response = await fetch('https://aaharsetufinal.onrender.com/api/volunteers/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',

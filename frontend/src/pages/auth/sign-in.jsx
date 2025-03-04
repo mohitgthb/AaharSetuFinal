@@ -29,7 +29,7 @@ export function SignIn() {
       }
   
       // Fetch the latest session data to ensure the role is correct
-      const sessionResponse = await fetch("http://localhost:5000/api/auth/me", { credentials: "include" });
+      const sessionResponse = await fetch("https://aaharsetufinal.onrender.com/api/auth/me", { credentials: "include" });
       const sessionData = await sessionResponse.json();
   
       if (!sessionData.user) {

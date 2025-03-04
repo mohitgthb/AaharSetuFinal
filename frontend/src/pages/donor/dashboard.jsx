@@ -35,7 +35,7 @@ export function DonorDashboard() {
   useEffect(() => {
     const fetchDonations = async () => {
       try {
-        const response = await fetch("http://localhost:5000/donations", {
+        const response = await fetch("https://aaharsetufinal.onrender.com/donations", {
           credentials: "include", // Ensure authentication if using sessions
         });
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
@@ -57,7 +57,7 @@ export function DonorDashboard() {
   useEffect(() => {
     const fetchNgoRequests = async () => {
       try {
-        const response = await fetch("http://localhost:5000/donations/my-requests", {
+        const response = await fetch("https://aaharsetufinal.onrender.com/donations/my-requests", {
           credentials: "include",
         });
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
@@ -76,7 +76,7 @@ export function DonorDashboard() {
   // Handle accepting an NGO request
   const handleAcceptRequest = async (requestId) => {
     try {
-      const response = await fetch(`http://localhost:5000/donations/requests/${requestId}/accept`, {
+      const response = await fetch(`https://aaharsetufinal.onrender.com/donations/requests/${requestId}/accept`, {
         method: "POST",
         credentials: "include",
       });

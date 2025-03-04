@@ -17,7 +17,7 @@ export function ValidationTable({ type, searchTerm}) {
     useEffect(() => {
         const fetchNgoForm = async () => {
             try {
-                const response = await fetch("http://localhost:5000/admin/ngo", {
+                const response = await fetch("https://aaharsetufinal.onrender.com/admin/ngo", {
                     credentials: "include", // Ensure authentication if using sessions
                 });
                 if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
@@ -40,7 +40,7 @@ export function ValidationTable({ type, searchTerm}) {
     useEffect(() => {
         const fetchDonationForm = async () => {
             try {
-                const response = await fetch("http://localhost:5000/admin/donation", {
+                const response = await fetch("https://aaharsetufinal.onrender.com/admin/donation", {
                     credentials: "include", // Ensure authentication if using sessions
                 });
                 if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
@@ -66,7 +66,7 @@ export function ValidationTable({ type, searchTerm}) {
     useEffect(() => {
         const fetchVolunteerForm = async () => {
             try {
-                const response = await fetch("http://localhost:5000/admin/volunteer", {
+                const response = await fetch("https://aaharsetufinal.onrender.com/admin/volunteer", {
                     credentials: "include", // Ensure authentication if using sessions
                 });
                 if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
@@ -103,7 +103,7 @@ export function ValidationTable({ type, searchTerm}) {
 
     const handleApprove = async (id) => {
         try {
-            const response = await fetch(`http://localhost:5000/admin/donation/${id}/approve`, {
+            const response = await fetch(`https://aaharsetufinal.onrender.com/admin/donation/${id}/approve`, {
                 method: "PUT",
                 credentials: "include",
                 headers: {
@@ -132,7 +132,7 @@ export function ValidationTable({ type, searchTerm}) {
     
     const handleReject = async (id) => {
         try {
-            const response = await fetch(`http://localhost:5000/admin/donation/${id}/reject`, {
+            const response = await fetch(`https://aaharsetufinal.onrender.com/admin/donation/${id}/reject`, {
                 method: "PUT",
                 credentials: "include",
                 headers: {

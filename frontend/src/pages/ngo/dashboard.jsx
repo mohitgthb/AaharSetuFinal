@@ -23,7 +23,7 @@ export function NgoDashboard() {
   useEffect(() => {
     const fetchDonationRequests = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/ngos/requests", { credentials: "include" });
+        const response = await fetch("https://aaharsetufinal.onrender.com/api/ngos/requests", { credentials: "include" });
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
         const data = await response.json();
         console.log("Fetched Pending Donation Requests:", data);
@@ -35,7 +35,7 @@ export function NgoDashboard() {
 
     const fetchApprovedDonations = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/ngos/approved", { credentials: "include" });
+        const response = await fetch("https://aaharsetufinal.onrender.com/api/ngos/approved", { credentials: "include" });
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
         const data = await response.json();
         console.log("Fetched Approved Donations:", data);
@@ -47,7 +47,7 @@ export function NgoDashboard() {
 
     const fetchNgoRequestedDonations = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/ngos/my-requests", { credentials: "include" });
+        const response = await fetch("https://aaharsetufinal.onrender.com/api/ngos/my-requests", { credentials: "include" });
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
         const data = await response.json();
         console.log("Fetched NGO Requested Donations:", data);
@@ -67,7 +67,7 @@ export function NgoDashboard() {
   // ✅ Handle approving a donation request
   const handleApproveDonation = async (donationId) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/ngos/requests/${donationId}/accept`, {
+      const response = await fetch(`https://aaharsetufinal.onrender.com/api/ngos/requests/${donationId}/accept`, {
         method: "POST",
         credentials: "include",
       });
@@ -89,7 +89,7 @@ export function NgoDashboard() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:5000/api/ngos/request-donation", {
+      const response = await fetch("https://aaharsetufinal.onrender.com/api/ngos/request-donation", {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },

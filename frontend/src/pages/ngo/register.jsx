@@ -103,7 +103,7 @@ export function NGORegister() {
     e.preventDefault();
     if (!validateForm()) return;
     try {
-      const response = await fetch('http://localhost:5000/api/ngos/register', {
+      const response = await fetch('https://aaharsetufinal.onrender.com/api/ngos/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include', // Ensures cookies are sent
