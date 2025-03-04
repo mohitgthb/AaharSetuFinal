@@ -8,6 +8,7 @@ const bcrypt = require('bcryptjs');
 const cors = require("cors");
 const axios = require("axios");
 require('dotenv').config();
+const MongoStore = require('connect-mongo');
 
 
 const { isAuthenticated, hasRole } = require('./middlewares/authMiddleware');
@@ -39,7 +40,7 @@ process.on('SIGINT', async () => {
 });
 
 app.use(cors({
-    origin: ["http://localhost:5173", "http://localhost:5174", "https://aharsetu-recursia.netlify.app/", "https://aaharsetufinal-1.onrender.com"], // Add frontend URLs
+    origin: ["http://localhost:5173", "http://localhost:5174", "https://aaharsetufinal-1.onrender.com"], // Add frontend URLs
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"], // Allow necessary methods
     allowedHeaders: ["Content-Type", "Authorization"] // Ensure proper headers
@@ -49,19 +50,34 @@ app.use(cors({
 // ✅ FIX 2: Middleware Fixes
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json({ limit: '50mb' }));
-// app.use(cors({ origin: ["http://localhost:5173", "http://localhost:5174"], credentials: true }));
+
+const MongoStore = require('connect-mongo');
 
 app.use(session({ 
     secret: process.env.SESSION_SECRET || 'defaultSecret', 
     resave: false, 
     saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URI, collectionName: 'sessions' }), // ✅ MongoDB session storage
     cookie: {
         httpOnly: true,
-        secure: false,  // ❌ Set `true` in production if using HTTPS
-        sameSite: "lax",  // ✅ Helps with cross-origin session issues
-        maxAge: 1000 * 60 * 60 * 24 * 7, // ✅ 7-day session persistence
+        secure: process.env.NODE_ENV === "production",  // ✅ Use HTTPS in production
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+        maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
     }
 }));
+
+
+// app.use(session({ 
+//     secret: process.env.SESSION_SECRET || 'defaultSecret', 
+//     resave: false, 
+//     saveUninitialized: false,
+//     cookie: {
+//         httpOnly: true,
+//         secure: false,  // ❌ Set `true` in production if using HTTPS
+//         sameSite: "lax",  // ✅ Helps with cross-origin session issues
+//         maxAge: 1000 * 60 * 60 * 24 * 7, // ✅ 7-day session persistence
+//     }
+// }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
@@ -88,16 +104,39 @@ passport.serializeUser((user, done) => {
     done(null, user._id);
 });
 
+// passport.deserializeUser(async (id, done) => {
+//     try {
+//         console.log("Deserializing User ID:", id); // ✅ Debug
+//         const user = await User.findById(id);
+//         console.log("Deserialized User:", user); // ✅ Debug
+//         done(null, user);
+//     } catch (error) {
+//         done(error);
+//     }
+// });
+
 passport.deserializeUser(async (id, done) => {
     try {
-        console.log("Deserializing User ID:", id); // ✅ Debug
+        console.log("🚀 Deserializing User ID:", id);
+        if (!id) {
+            console.log("⚠️ No user ID found in session!");
+            return done(null, false);
+        }
+
         const user = await User.findById(id);
-        console.log("Deserialized User:", user); // ✅ Debug
+        if (!user) {
+            console.log("❌ User not found in DB for ID:", id);
+            return done(null, false);
+        }
+
+        console.log("✅ Successfully deserialized User:", user);
         done(null, user);
     } catch (error) {
+        console.error("🔥 Error in deserialization:", error);
         done(error);
     }
 });
+
 
 // passport.serializeUser((user, done) => done(null, user.id));
 // passport.deserializeUser(async (id, done) => {
