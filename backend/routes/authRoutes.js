@@ -71,17 +71,20 @@ router.get("/me", (req, res) => {
 
 // Logout user
 router.post("/logout", (req, res, next) => {
-  req.logout((err) => {
+  if (!req.user) return res.status(400).json({ message: "Not logged in" });
+
+  req.logout(err => {
     if (err) return next(err);
 
-    req.session.destroy((err) => {
+    req.session.destroy(err => {
       if (err) return next(err);
-      
-      res.clearCookie("connect.sid", { path: "/" }); // Ensure session cookie is cleared
+
+      res.clearCookie("connect.sid", { path: "/" });
       return res.json({ message: "Logged out successfully" });
     });
   });
 });
+
 
 
 module.exports = router;
