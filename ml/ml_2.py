@@ -151,7 +151,7 @@ def predict():
 
 if __name__ == '__main__':
     predictor = FoodSurplusPredictor('food_surplus_data.csv')
-    app.run(debug=True, port=5004)
+    app.run(host="0.0.0.0", debug=True, port=5004)
 
 
 
