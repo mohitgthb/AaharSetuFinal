@@ -31,20 +31,37 @@ export const AuthProvider = ({ children }) => {
   };
 
   // ✅ Define logout function to clear session
+
   const logout = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/auth/logout", {
-        method: "POST",
-        credentials: "include",
-      });
+        const res = await fetch("https://aaharsetufinal.onrender.com/api/auth/logout", {
+            method: "POST",
+            credentials: "include",
+        });
 
-      if (res.ok) {
-        setUser(null);
-      }
+        if (res.ok) {
+            setUser(null);
+            document.cookie = "connect.sid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; // ✅ Force delete cookie
+        }
     } catch (error) {
-      console.error("Logout error:", error);
+        console.error("Logout error:", error);
     }
-  };
+};
+
+  // const logout = async () => {
+  //   try {
+  //     const res = await fetch("https://aaharsetufinal.onrender.com/api/auth/logout", {
+  //       method: "POST",
+  //       credentials: "include",
+  //     });
+
+  //     if (res.ok) {
+  //       setUser(null);
+  //     }
+  //   } catch (error) {
+  //     console.error("Logout error:", error);
+  //   }
+  // };
 
   useEffect(() => {
     fetchUser();

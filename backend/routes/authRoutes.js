@@ -59,6 +59,9 @@ router.post("/login", (req, res, next) => {
 
 // Check if user is logged in (for Navbar state)
 router.get("/me", (req, res) => {
+  console.log("🔍 Session ID:", req.sessionID);
+  console.log("📂 Session Data:", req.session);
+  console.log("👤 User Data:", req.user);
   if (req.isAuthenticated()) {
     res.json({ user: req.user });
   } else {

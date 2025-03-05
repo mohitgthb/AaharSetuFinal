@@ -46,6 +46,8 @@ app.use(cors({
     allowedHeaders: ["Content-Type", "Authorization"] // Ensure proper headers
 }));
 
+app.set("trust proxy", 1);
+
 
 // ✅ FIX 2: Middleware Fixes
 app.use(express.urlencoded({ extended: false }));
@@ -55,14 +57,18 @@ app.use(session({
     secret: process.env.SESSION_SECRET || 'defaultSecret', 
     resave: false, 
     saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: process.env.MONGO_URI, collectionName: 'sessions' }), // ✅ MongoDB session storage
+    store: MongoStore.create({ 
+        mongoUrl: process.env.MONGO_URI, 
+        collectionName: 'sessions' 
+    }), // ✅ MongoDB session storage
     cookie: {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",  // ✅ Use HTTPS in production
-        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+        secure: true,  // ✅ Ensure cookies work over HTTPS (Render is HTTPS)
+        sameSite: "none",  // ✅ Required for cross-origin requests
         maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
     }
 }));
+
 
 
 // app.use(session({ 
@@ -161,6 +167,12 @@ app.use("/api/volunteers", isAuthenticated, hasRole(['volunteer', 'admin']), vol
 app.use('/donations', isAuthenticated, hasRole(['donor']), donationRoutes);
 app.use('/', recommendationRoutes);
 app.use('/admin', adminRoutes);
+
+app.use((req, res, next) => {
+    console.log("🔍 Session Data:", req.session);
+    console.log("👤 User from Session:", req.user);
+    next();
+});
 
 // ✅ FIX 5: API Check
 app.get("/", (req, res) => {
