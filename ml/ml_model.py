@@ -17,7 +17,7 @@ CORS(app, resources={
 })
 
 # MongoDB Connection
-client = MongoClient("mongodb://localhost:27017/")
+client = MongoClient("mongodb+srv://mohitchoudhari162:mohitchoudhari196@cluster0.vu1zs.mongodb.net/AaharSetu")
 db = client["AaharSetu"]
 donations_collection = db["donations"]
 
@@ -101,4 +101,4 @@ def recommend_donations():
 
 # Run the Flask app
 if __name__ == "__main__":
-    app.run(debug=True, port=5001)
+    app.run(host="0.0.0.0", port=5001, debug=False)
