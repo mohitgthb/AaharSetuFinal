@@ -19,20 +19,27 @@ export function Navbar() {
   // Logout function to clear session and update UI
   const handleLogout = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/auth/logout", {
+      console.log("Attempting logout...");
+  
+      const res = await fetch("https://aaharsetufinal.onrender.com/api/auth/logout", {
         method: "POST",
-        credentials: "include",
+        credentials: "include", // Ensures cookies are sent with the request
       });
-
+  
+      const data = await res.json();
+      console.log("Logout Response:", res.status, data);
+  
       if (res.ok) {
         setUser(null); // Update UI after logout
         window.location.href = "/sign-in"; // Redirect to login
+      } else {
+        console.error("Logout failed:", data);
       }
     } catch (error) {
       console.error("Logout error:", error);
     }
   };
-
+  
   return (
     <nav className="fixed top-0 left-0 w-full bg-white/10 backdrop-blur-lg shadow-md border-b border-white/20 z-[100]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
