@@ -41,7 +41,7 @@ process.on('SIGINT', async () => {
 });
 
 app.use(cors({
-    origin: ["http://localhost:5173", "http://localhost:5174", "https://aaharsetufinal-1.onrender.com"], // Add frontend URLs
+    origin: ["http://localhost:5173", "http://localhost:5174", "https://aaharsetufinal-1.onrender.com", "https://aaharsetu.vercel.app/"], // Add frontend URLs
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"], // Allow necessary methods
     allowedHeaders: ["Content-Type", "Authorization"] // Ensure proper headers
