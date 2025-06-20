@@ -9,6 +9,7 @@ const cors = require("cors");
 const axios = require("axios");
 require('dotenv').config();
 const MongoStore = require('connect-mongo');
+const path = require('path');
 
 
 const { isAuthenticated, hasRole } = require('./middlewares/authMiddleware');
@@ -24,12 +25,6 @@ const adminRoutes = require("./routes/admin");
 
 
 const app = express();
-
-app.use(express.static(path.join(__dirname, '..', 'frontend', 'build')));
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'frontend', 'build', 'index.html'));
-});
 
 // ✅ FIX 1: Database Connection Handling
 mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/AaharSetu', {
@@ -183,6 +178,12 @@ app.use((req, res, next) => {
 // ✅ FIX 5: API Check
 app.get("/", (req, res) => {
     res.send("API is running...");
+});
+
+app.use(express.static(path.join(__dirname, '..', 'frontend', 'build')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'build', 'index.html'));
 });
 
 // ✅ FIX 6: Port Fixes
