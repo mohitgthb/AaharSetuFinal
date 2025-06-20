@@ -25,6 +25,12 @@ const adminRoutes = require("./routes/admin");
 
 const app = express();
 
+app.use(express.static(path.join(__dirname, '..', 'frontend', 'build')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'build', 'index.html'));
+});
+
 // ✅ FIX 1: Database Connection Handling
 mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/AaharSetu', {
     useNewUrlParser: true,
